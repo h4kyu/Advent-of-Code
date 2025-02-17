@@ -36,6 +36,7 @@ int main() {
         col_2.push_back(num_2);
     }
 
+    // part 1 confirm
     std::cout << part_1(col_1, col_2);
 
     return 0;
