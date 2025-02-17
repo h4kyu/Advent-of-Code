@@ -1,0 +1,52 @@
+# Ignore macOS system files
+.DS_Store
+
+# Ignore build files and CMake
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+*.ninja
+*.o
+*.obj
+*.out
+*.exe
+*.bin
+*.a
+*.so
+*.dylib
+*.lib
+*.dll
+
+# Ignore IDE settings (CLion/.idea)
+.idea/
+*.iml
+
+# Ignore test and debugging files
+Testing/
+test/
+*.log
+*.yaml
+*.cmake
+
+# Ignore CLion-specific files
+cmake-build-debug/
+cmake-build-release/
+CMakeLists.txt.user
+
+# Allow source code files
+!*.cpp
+!*.hpp
+!*.h
+!*.c
+
+# Allow input/output files (txt, csv, and doc-like files)
+!*.txt
+!*.csv
+!*.dat
+!*.doc
+!*.docx
+!*.json
+!*.xml
+
+# Ignore version control files
+.git/
