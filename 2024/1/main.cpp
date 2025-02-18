@@ -3,7 +3,6 @@
 #include <string>
 #include <algorithm>
 
-int part_1(std::vector<int>& col_1, std::vector<int>& col_2);
 
 int part_1(std::vector<int>& col_1, std::vector<int>& col_2) {
     int distance{0};
@@ -15,8 +14,20 @@ int part_1(std::vector<int>& col_1, std::vector<int>& col_2) {
     for(int i{0}; i < col_1.size(); ++i) {
         distance += abs(col_1[i] - col_2[i]);
     }
-
     return distance;
+}
+
+int part_2(std::vector<int>& col_1, std::vector<int>& col_2) {
+    int score{0};
+
+    std::sort(col_1.begin(), col_1.end());
+    std::sort(col_2.begin(), col_2.end());
+
+    // iterate over ith element of col_1, find count
+    for(int i{0}; i < col_1.size(); ++i) {
+        score += col_1[i]*(std::count(col_2.begin(), col_2.end(), col_1[i]));
+    }
+    return score;
 }
 
 int main() {
@@ -37,7 +48,9 @@ int main() {
     }
 
     // part 1 confirm
-    std::cout << part_1(col_1, col_2);
+    std::cout << part_1(col_1, col_2) << std::endl;
+    // part 2 confirm
+    std::cout << part_2(col_1, col_2) << std::endl;
 
     return 0;
 }
