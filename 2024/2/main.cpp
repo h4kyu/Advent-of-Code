@@ -30,7 +30,7 @@ bool is_safe(std::vector<int>& levels) {
 }
 
 
-int part_1(std::string input) {
+int part_1(std::string& input) {
     std::istringstream inputStream(input);
     int safeCount{0};
     std::string line;
@@ -49,6 +49,42 @@ int part_1(std::string input) {
     return safeCount;
 }
 
+
+int part_2(std::string& input) {
+    std::istringstream inputStream(input);
+    int safeCount{0};
+    std::string line;
+
+    while (std::getline(inputStream, line)) {
+        std::istringstream stream(line);
+        int level{};
+        std::vector<int> levels{};
+
+        while (stream >> level) {
+            levels.push_back(level);
+        }
+
+        if (is_safe(levels)) ++safeCount;
+
+        // remove ith element and test safe
+        else {
+            for (int i{0}; i < levels.size(); ++i) {
+                std::vector<int> levelsRemoved{};
+                for (int j{0}; j < levels.size(); ++j) {
+                    if (j != i) {
+                        levelsRemoved.push_back(levels[j]);
+                    }
+                }
+                if (is_safe(levelsRemoved)) {
+                    ++safeCount;
+                    break;
+                }
+            }
+        }
+    }
+    return safeCount;
+}
+
 int main() {
     // read file line by line
     std::ifstream file("input.txt");
@@ -62,4 +98,6 @@ int main() {
     // part 1
     std::cout << part_1(input) << std::endl;
     // std::cout << part_1(testInput) << std::endl;
+    std::cout << part_2(input) << std::endl;
+    // std::cout << part_2(testInput) << std::endl;
 }
