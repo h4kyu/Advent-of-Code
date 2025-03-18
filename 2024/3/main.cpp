@@ -17,16 +17,20 @@ int part_1(std::string& input) {
     size_t searchEnd{input.find(delimiter)};
 
     while (searchEnd != std::string::npos) {
+
         // check if ')' exists within 8 characters
         std::string toSearch{input.substr(searchEnd + 4, searchEnd + 12)};
         size_t pos{toSearch.find(')')};
+
         if (pos != std::string::npos) {
-            // search for comma
-            toSearch = input.substr(searchEnd + 4, searchEnd + 4 + pos);
+            // search for comma until ')' pos
+            toSearch = toSearch.substr(0, pos + 1);
+
             if (toSearch.find(',') != std::string::npos) {
                 // check if only numbers exist between comma position and '(' and ')'
                 std::string leftOfComma{toSearch.substr(0, toSearch.find(','))};
                 std::string rightOfComma{toSearch.substr(toSearch.find(','))};
+
                 if (!leftOfComma.empty() && std::all_of(leftOfComma.begin(), leftOfComma.end(), ::isdigit)
                     && !rightOfComma.empty() && std::all_of(rightOfComma.begin(), rightOfComma.end(), ::isdigit)) {
                     mulSum += std::stoi(leftOfComma)*std::stoi(rightOfComma);
