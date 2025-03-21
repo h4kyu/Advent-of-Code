@@ -49,11 +49,11 @@ int part_1(std::string& input) {
 
 int main() {
     // read file into string input
-    // std::ifstream file("input.txt");
-    // std::string input{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
-
-    std::ifstream file("test.txt");
+    std::ifstream file("input.txt");
     std::string input{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
+
+    // std::ifstream file("test.txt");
+    // std::string input{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
 
     std::cout << part_1(input) << std::endl;
     return 0;
