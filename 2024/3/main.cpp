@@ -120,5 +120,6 @@ int main() {
     // std::string input{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
 
     std::cout << part_1(input) << std::endl;
+    std::cout << part_2(input) << std::endl;
     return 0;
 }
