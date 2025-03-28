@@ -21,6 +21,8 @@ std::string read_file(const char* filename) {
     return input;
 }
 
+using Grid = std::vector<std::vector<char>>;
+
 int part_1(std::string input) {
     int count{0};
 
