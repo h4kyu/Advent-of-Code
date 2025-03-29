@@ -23,6 +23,29 @@ std::string read_file(const char* filename) {
 
 using Grid = std::vector<std::vector<char>>;
 
+const std::array<char, 4> XMAS = {'X', 'M', 'A', 'S'};
+const std::array<char, 4> SAMX = {'S', 'A', 'M', 'X'};
+
+bool array_has_xmas(const std::array<char, 4>& arr) {
+    return arr == SAMX || arr == XMAS;
+}
+
+std::array<char, 4> get_first_column(const std::vector<std::vector<char>>& block, int col) {
+    std::array<char, 4> result;
+    for (int i = 0; i < 4; i++) {
+        result[i] = block[i][col];
+    }
+    return result;
+}
+
+std::array<char, 4> get_first_row(const std::vector<std::vector<char>>& block, int row) {
+    std::array<char, 4> result;
+    for (int i = 0; i < 4; i++) {
+        result[i] = block[row][i];
+    }
+    return result;
+}
+
 int part_1(std::string input) {
     int count{0};
 
