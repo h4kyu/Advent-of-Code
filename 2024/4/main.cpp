@@ -88,11 +88,60 @@ int part_1(std::string& input) {
     return count;
 }
 
+int is_x_mas(Grid& grid, const size_t row, const size_t col) { // check diagonally adjacent chars
+    if ((grid[row-1][col-1] == 'M' && grid[row+1][col+1] == 'S') || (grid[row-1][col-1] == 'S' && grid[row+1][col+1] == 'M')) { // check first diagonal
+        if ((grid[row-1][col+1] == 'M' && grid[row+1][col-1] == 'S') || (grid[row-1][col+1] == 'S' && grid[row+1][col-1] == 'M')) { // check first diagonal
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int part_2(std::string& input) {
+    int count{0};
+    std::stringstream inputStream(input);
+    std::string line{};
+    Grid unpaddedGrid;
+
+    while (std::getline(inputStream, line)) {
+        std::vector<char> row(line.begin(), line.end());
+        unpaddedGrid.push_back(row);
+    }
+
+    size_t numRows{unpaddedGrid.size()};
+    size_t numCols{unpaddedGrid[0].size()};
+
+    Grid paddedGrid(numRows + 2, std::vector<char>(numCols + 2, '.'));
+
+    // fill paddedGrid with chars from unpaddedGrid
+    for (size_t i{0}; i < numRows; ++i) {
+        for (size_t j{0}; j < numCols; ++j) {
+            paddedGrid[i+1][j+1] = unpaddedGrid[i][j];
+        }
+    }
+
+    // iterate over chars in paddedGrid
+    for (size_t i{1}; i < numRows+1; ++i) {
+        for (size_t j{1}; j < numCols+1; ++j) {
+            char cell{paddedGrid[i][j]};
+            size_t row{i};
+            size_t col{j};
+            if (cell == 'A') {
+                count += is_x_mas(paddedGrid, row, col);
+            }
+        }
+    }
+
+
+    return count;
+}
+
 int main() {
     std::string input{read_file("input.txt")};
     // std::string input{read_file("test.txt")};
 
     std::cout << part_1(input) << std::endl;
+    std::cout << part_2(input) << std::endl;
 
     return 0;
 }
