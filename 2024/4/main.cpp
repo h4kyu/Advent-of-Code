@@ -37,7 +37,7 @@ int countXMAS(Grid& grid, const size_t row, const size_t col) {
     char topLeftArr[4] = {grid[row][col], grid[row-1][col-1], grid[row-2][col-2], grid[row-3][col-3]};
     char topArr[4] = {grid[row][col], grid[row-1][col], grid[row-2][col], grid[row-3][col]};
     char topRightArr[4] = {grid[row][col], grid[row-1][col+1], grid[row-2][col+2], grid[row-3][col+3]};
-    char rightArr[4] = {grid[row][col+1], grid[row][col+2], grid[row][col+3], grid[row][col+4]};
+    char rightArr[4] = {grid[row][col], grid[row][col+1], grid[row][col+2], grid[row][col+3]};
     char bottomRightArr[4] = {grid[row][col], grid[row+1][col+1], grid[row+2][col+2], grid[row+3][col+3]};
     char bottomArr[4] = {grid[row][col], grid[row+1][col], grid[row+2][col], grid[row+3][col]};
     char bottomLeftArr[4] = {grid[row][col], grid[row+1][col-1], grid[row+2][col-2], grid[row+3][col-3]};
@@ -89,8 +89,8 @@ int part_1(std::string& input) {
 }
 
 int main() {
-    // std::string input{read_file("input.txt")};
-    std::string input{read_file("test.txt")};
+    std::string input{read_file("input.txt")};
+    // std::string input{read_file("test.txt")};
 
     std::cout << part_1(input) << std::endl;
 
