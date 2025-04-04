@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <set>
 #include <sstream>
 
 /* part 1:
@@ -40,11 +41,40 @@ std::vector<int> split_update(const std::string& update, const char delimiter) {
     return updateParsed;
 }
 
+int part_1(std::string& input) {
+    int sum{0};
+
+    // separate rules and updates
+    size_t pos{input.find("\n\n")};
+    std::string rulesSection{input.substr(0, pos)};
+    std::string updatesSection{input.substr(pos + 2)};
+
+    // store rules as std::set
+    std::set<std::pair<int, int>> rules{};
+    std::stringstream rulesSectionStream(rulesSection);
+    std::string rule;
+
+    while (std::getline(rulesSectionStream, rule)) {
+        rules.insert(split_rule(rule, '|'));
+    }
+
+    // for each vector of updates
+    std::stringstream updatesSectionStream(updatesSection);
+    std::string update;
+
+    while (std::getline(rulesSectionStream, update)) {
+        std::vector<int> updateParsed{split_update(update, ',')};
+        // if (update_is_correct) add middle page to sum
+    }
+    
+    return sum;
+}
+
 int main() {
     // std::string input{read_file("input.txt")};
     std::string input{read_file("test.txt")};
 
-    split_rule("47|53", '|');
+    part_1(input);
 
     return 0;
 }
