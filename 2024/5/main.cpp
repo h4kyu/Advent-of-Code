@@ -41,6 +41,11 @@ std::vector<int> split_update(const std::string& update, const char delimiter) {
     return updateParsed;
 }
 
+bool update_is_correct(std::vector<int> update) {
+    
+    return false;
+}
+
 int part_1(std::string& input) {
     int sum{0};
 
@@ -66,7 +71,7 @@ int part_1(std::string& input) {
         std::vector<int> updateParsed{split_update(update, ',')};
         // if (update_is_correct) add middle page to sum
     }
-    
+
     return sum;
 }
 
