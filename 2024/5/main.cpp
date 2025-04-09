@@ -41,8 +41,23 @@ std::vector<int> split_update(const std::string& update, const char delimiter) {
     return updateParsed;
 }
 
-bool update_is_correct(std::vector<int> update) {
-    
+bool update_is_correct(std::vector<int> update, std::set<std::pair<int, int>> rules) {
+    std::vector<int> sortedUpdate = update;
+
+    auto is_less_than = [&rules](int a, int b) {
+        if (rules.count({a, b})) return true;
+        if (rules.count({b, a})) return false;
+        return a < b;
+    };
+
+    std::sort(sortedUpdate.begin(), sortedUpdate.end(),
+        [&is_less_than](int x, int y) {
+            return is_less_than(x, y);
+        });
+
+    if (update == sortedUpdate) {
+        return true;
+    }
     return false;
 }
 
@@ -69,7 +84,9 @@ int part_1(std::string& input) {
 
     while (std::getline(rulesSectionStream, update)) {
         std::vector<int> updateParsed{split_update(update, ',')};
-        // if (update_is_correct) add middle page to sum
+        if (update_is_correct(updateParsed, rules)) {
+            // add middle page to sum
+        }
     }
 
     return sum;
