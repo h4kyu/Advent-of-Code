@@ -86,6 +86,7 @@ int part_1(std::string& input) {
         std::vector<int> updateParsed{split_update(update, ',')};
         if (update_is_correct(updateParsed, rules)) {
             // add middle page to sum
+            sum += updateParsed[updateParsed.size()/2];
         }
     }
 
@@ -96,7 +97,7 @@ int main() {
     // std::string input{read_file("input.txt")};
     std::string input{read_file("test.txt")};
 
-    part_1(input);
+    std::cout << part_1(input) << std::endl;
 
     return 0;
 }
