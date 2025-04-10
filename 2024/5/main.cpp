@@ -93,6 +93,32 @@ int part_1(std::string& input) {
     return sum;
 }
 
+int correct_update_middle(std::vector<int> update, std::set<std::pair<int, int>> rules) {
+    std::vector<int> sortedUpdate = update;
+
+    auto is_less_than = [&rules](int a, int b) {
+        if (rules.count({a, b})) return true;
+        if (rules.count({b, a})) return false;
+        return a < b;
+    };
+
+    std::sort(sortedUpdate.begin(), sortedUpdate.end(),
+        [&is_less_than](int x, int y) {
+            return is_less_than(x, y);
+        });
+
+    if (update == sortedUpdate) {
+        return update[update.size()/2];
+    }
+    return sortedUpdate[sortedUpdate.size()/2];
+}
+
+int part_2(std::string& input) {
+    int sum{0};
+
+    return sum;
+}
+
 int main() {
     std::string input{read_file("input.txt")};
     // std::string input{read_file("test.txt")};
