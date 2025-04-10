@@ -108,13 +108,36 @@ int correct_update_middle(std::vector<int> update, std::set<std::pair<int, int>>
         });
 
     if (update == sortedUpdate) {
-        return update[update.size()/2];
+        return 0;
     }
     return sortedUpdate[sortedUpdate.size()/2];
 }
 
 int part_2(std::string& input) {
     int sum{0};
+
+    // separate rules and updates
+    size_t pos{input.find("\n\n")};
+    std::string rulesSection{input.substr(0, pos)};
+    std::string updatesSection{input.substr(pos + 2)};
+
+    // store rules as std::set
+    std::set<std::pair<int, int>> rules{};
+    std::stringstream rulesSectionStream(rulesSection);
+    std::string rule;
+
+    while (std::getline(rulesSectionStream, rule)) {
+        rules.insert(split_rule(rule, '|'));
+    }
+
+    // for each vector of updates
+    std::stringstream updatesSectionStream(updatesSection);
+    std::string update;
+
+    while (std::getline(updatesSectionStream, update)) {
+        std::vector<int> updateParsed{split_update(update, ',')};
+        sum+= correct_update_middle(updateParsed, rules);
+    }
 
     return sum;
 }
@@ -124,6 +147,8 @@ int main() {
     // std::string input{read_file("test.txt")};
 
     std::cout << part_1(input) << std::endl;
+
+    std::cout << part_2(input) << std::endl;
 
     return 0;
 }
