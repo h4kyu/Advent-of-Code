@@ -82,7 +82,7 @@ int part_1(std::string& input) {
     std::stringstream updatesSectionStream(updatesSection);
     std::string update;
 
-    while (std::getline(rulesSectionStream, update)) {
+    while (std::getline(updatesSectionStream, update)) {
         std::vector<int> updateParsed{split_update(update, ',')};
         if (update_is_correct(updateParsed, rules)) {
             // add middle page to sum
@@ -94,8 +94,8 @@ int part_1(std::string& input) {
 }
 
 int main() {
-    // std::string input{read_file("input.txt")};
-    std::string input{read_file("test.txt")};
+    std::string input{read_file("input.txt")};
+    // std::string input{read_file("test.txt")};
 
     std::cout << part_1(input) << std::endl;
 
