@@ -143,8 +143,8 @@ int part_2(std::string& input) {
 }
 
 int main() {
-    std::string input{read_file("input.txt")};
-    // std::string input{read_file("test.txt")};
+    // std::string input{read_file("input.txt")};
+    std::string input{read_file("test.txt")};
 
     std::cout << part_1(input) << std::endl;
 
