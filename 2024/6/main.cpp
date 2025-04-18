@@ -15,7 +15,8 @@ std::string read_file(const char* filename) {
  * move the guard incrementally, changing the map behind it accordingly
  * do so until either 1. the whole map is traversed, 2. the guard is out of bounds, 3. the guard is in a loop
  *    for loop detection, check if guard has previously been in the same position with same direction
- * 
+ *    TODO keep above looping logic for part 2, but part 1 assumes guard steps out of bounds
+ *
  */
 
 int main() {
