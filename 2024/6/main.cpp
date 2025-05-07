@@ -24,10 +24,23 @@ std::string read_file(const char* filename) {
 class Map {
 private:
     std::vector<std::vector<char>> currMap;
-    std::unordered_set<char> directions = {'^', '>', 'v', '<'};
+
+    enum class Direction {
+        Up,
+        Down,
+        Left,
+        Right
+    };
+
+    std::unordered_map<char, Direction> directions {
+        {'^', Direction::Up},
+        {'v', Direction::Down},
+        {'<', Direction::Left},
+        {'>', Direction::Right}
+    };
 
     // get guard location
-    std::pair<int, int> get_guard_location(std::vector<std::vector<char>> map) {
+    std::pair<int, int> get_guard_location(std::vector<std::vector<char>>& map) {
         // iterate over chars in map
         for (int row{0}; row < map.size(); ++row) {
             for (int col{0}; col < map[0].size(); ++col) {
@@ -42,8 +55,32 @@ private:
     }
 
     // get guard direction
+    Direction get_guard_direction(char guard) {
+        return directions[guard];
+    }
 
     // move guard
+    void move_guard(std::vector<std::vector<char>>& map, std::pair<int, int> currPos, Direction direction) {
+        char spaceInFront{};
+        int row{currPos.first};
+        int col{currPos.second};
+
+        if (direction == Direction::Up) {
+            spaceInFront = map[row-1][col];
+        } else if (direction == Direction::Down) {
+            spaceInFront = map[row+1][col];
+        } else if (direction == Direction::Left) {
+            spaceInFront = map[row][col-1];
+        } else {
+            spaceInFront = map[row][col+1];
+        }
+
+        // check for border
+        if (spaceInFront == 'X') {
+            
+        }
+    }
+
 public:
     // constructor, parse input as a 2D array
     explicit Map(const std::string& input) {
@@ -51,10 +88,9 @@ public:
         std::string line{};
 
         while (std::getline(ss, line)) {
+            // TODO add 'X' ring as border when parsing
             currMap.push_back(std::vector<char>(line.begin(), line.end()));
         }
-
-
     }
 
     // get number of tiles traversed
