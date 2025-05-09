@@ -25,19 +25,19 @@ class Map {
 private:
     std::vector<std::vector<char>> currMap;
 
-    enum class Direction {
-        Up,
-        Down,
-        Left,
-        Right
+    // enum class Direction {
+    //     Up,
+    //     Down,
+    //     Left,
+    //     Right
+    // };
+
+    enum class ExitCode {
+        OUT_OF_BOUNDS,
+        LOOP
     };
 
-    std::unordered_map<char, Direction> directions {
-        {'^', Direction::Up},
-        {'v', Direction::Down},
-        {'<', Direction::Left},
-        {'>', Direction::Right}
-    };
+    std::array<char, 4> directions = {'^', '>', 'v', '<'};
 
     // get guard location
     std::pair<int, int> get_guard_location(std::vector<std::vector<char>>& map) {
@@ -46,7 +46,7 @@ private:
             for (int col{0}; col < map[0].size(); ++col) {
                 char currSpace{map[row][col]};
                 // TODO consider storing position of obstacles in first pass
-                if (directions.count(currSpace)) {
+                if (std::find(directions.begin(), directions.end(), currSpace)) {
                     return {row, col};
                 }
             }
@@ -55,29 +55,47 @@ private:
     }
 
     // get guard direction
-    Direction get_guard_direction(char guard) {
-        return directions[guard];
+    int get_guard_direction(char guard) {
+        if (guard == '^') return 0;
+        if (guard == '>') return 1;
+        if (guard == 'v') return 2;
+        return 3;
     }
+    // Direction get_guard_direction(char guard) {
+    //     if (guard == '^') return Direction::Up;
+    //     if (guard == '>') return Direction::Right;
+    //     if (guard == 'v') return Direction::Down;
+    //     return Direction::Left;
+    // }
 
     // move guard
-    void move_guard(std::vector<std::vector<char>>& map, std::pair<int, int> currPos, Direction direction) {
+    ExitCode move_guard(std::vector<std::vector<char>>& map, std::pair<int, int> currPos, int directionIndex) {
         char spaceInFront{};
         int row{currPos.first};
         int col{currPos.second};
 
-        if (direction == Direction::Up) {
+        if (directionIndex == 0) {
             spaceInFront = map[row-1][col];
-        } else if (direction == Direction::Down) {
-            spaceInFront = map[row+1][col];
-        } else if (direction == Direction::Left) {
-            spaceInFront = map[row][col-1];
-        } else {
+        } else if (directionIndex == 1) {
             spaceInFront = map[row][col+1];
+        } else if (directionIndex == 2) {
+            spaceInFront = map[row+1][col];
+        } else {
+            spaceInFront = map[row][col-1];
         }
 
-        // check for border
-        if (spaceInFront == 'X') {
-            
+        // check for boundary
+        if (spaceInFront == 'B') {
+            map[row][col] = 'X';
+            return ExitCode::OUT_OF_BOUNDS;
+        }
+
+        // check for obstacle
+        if (spaceInFront == '#') {
+            // turn guard to the right
+            int nextIndex{(directionIndex + 1) % 4};
+            char updatedGuard{directions[nextIndex]};
+            map[row][col] = updatedGuard;
         }
     }
 
@@ -87,8 +105,12 @@ public:
         std::stringstream ss(input);
         std::string line{};
 
+        // currMap.push_back(std::vector<char> boundary())
+
         while (std::getline(ss, line)) {
-            // TODO add 'X' ring as border when parsing
+            // TODO add 'B' ring as boundary when parsing
+
+
             currMap.push_back(std::vector<char>(line.begin(), line.end()));
         }
     }
